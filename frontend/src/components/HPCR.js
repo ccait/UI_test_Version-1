@@ -2,7 +2,7 @@ import React from "react";
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import {useNavigate} from 'react-router-dom';
 import CreateDB from "./CreateDB";
-import CreateTable, { LoadData } from "./CreateTable";
+import CreateTable from "./CreateTable";
 import DisplayDB from "./DisplayDB";
 import CreateAlgoTable from "./CreateAlgoTable";
 import DeleteDB from "./DeleteDB";
@@ -44,7 +44,7 @@ function HPCRContent(){
         <div>
             <Routes>
             <Route path="createDB" element={<CreateDB/>} />
-              <Route path="updateDB" element={<LoadData/>} />
+              <Route path="updateDB" element={<CreateTable/>} />
               <Route path="displayDB" element={<DisplayDB/>} />
               <Route path="deleteDB" element={<DeleteDB/>} />
               <Route path="createAlgo" element={<CreateAlgoTable/>} />

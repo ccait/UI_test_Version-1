@@ -26,7 +26,6 @@ const uploadFile = (info) => {
             'Content-Type': 'application/json'
         },
         method: "POST"}).then((res)=>{
-          //console.log(res.json());
           return res.json();
         }).then( (json) => {
           modelData=
@@ -66,7 +65,7 @@ const uploadFile = (info) => {
   );
 
   
-export function LoadData(){
+export function CreateTable(){
   function createTB(){
     console.log('create tb');
     alert('creating');
@@ -86,45 +85,14 @@ export function LoadData(){
     return(
         <section>
             <div class="container-fluid">
-                <h1 class="mt-5">Upload the Table:</h1>
+                <h1 class="mt-5">Upload Data:</h1>
                 <form method="POST" >
                     <UploadButton/>
                 </form>
-                <button onClick={createTB}>Click me</button>
+                <button onClick={createTB}>Upload Above Data</button>
             </div>
         </section>
     );
 };
-
-function CreateTable(){
-  function createTB(){
-    console.log('create tb');
-    alert('creating');
-      fetch("/createTB",
-      {
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-      },
-      method: "POST",
-      body: JSON.stringify(modelData)
-  })
-  .then(function(res){ console.log(res) })
-  .catch(function(res){ console.log(res) })
-  };
-  
-
-    return(
-        <section>
-            <div class="container-fluid">
-
-                <form method="POST" >
-                    <button onClick={createTB}>Click me</button>
-                </form>
-            </div>
-        </section>
-    );
-}
-
 
 export default CreateTable;

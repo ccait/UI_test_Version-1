@@ -1,0 +1,11 @@
+.Dropdown-root{
+    color: #2766DB;
+    align-items: center;
+
+}
+.Dropdown-menu{
+    border-style: solid;
+}
+.Dropdown-option{
+    border-style: dotted;
+}

@@ -1,12 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const Schemas = require('../modules/Schemas.js');
 const mongoose =require('mongoose');
 mongoose.set('strictQuery', false);
 const Schema = mongoose.Schema;
 
 let collectionModel;
-
+//test route that add a sample data
 router.get('/addsampletest', async (req, res) => {
     const data = {
         test:'teststst'
@@ -26,32 +25,30 @@ router.get('/addsampletest', async (req, res) => {
 
 
 
-// 
-router.post('/addTest', async (req, res) =>{
-    const inp = req.body.testInput;
-    Schemas.Test.create({ test: inp }, function (err, small) {
-        if (err) return handleError(err);
-        res.redirect('/test');
-        console.log('Posted');
-      });
-    //const test1 = await Schemas.Test.findOne({test:'testOriginal'}).exec();
-    
-});
 // return all Collections
-router.get('/test', async (req, res) => {
+router.get('/tablesName', async (req, res) => {
+    let tablenames =[];
     const nameList = await
     mongoose.connection.db.listCollections().toArray((err, names)=>{
         if (err){
             console.log(err);
         } 
         if(names) {
-            res.end(JSON.stringify(names));
-            console.log(names);
+            //res.end(JSON.stringify(names));
+            //console.log(names);
+            for (let name of names){
+                tablenames.push(name.name);
+            }
+            console.log(tablenames);
+            
+            res.end(JSON.stringify(tablenames));
         } else{
             res.end('no test retrieved');
         }
     });
 });
+
+
 // Create a collection with given name
 let dataModel;
 router.post('/createSchema', async(req, res) => {
@@ -83,6 +80,7 @@ router.post('/createSchema', async(req, res) => {
     res.redirect('/hpcr/createDB');
     res.end('Data not added');})
 });
+
 // insert the data
 router.post('/createTB', async(req, res) => {
     console.log(req.body);
@@ -110,6 +108,7 @@ router.post('/createTB', async(req, res) => {
 
     res.end('create tb post success');
 });
+//
 router.post('/getModel', async(req,res) =>{
     console.log('get model', dataModel);
     res.json(dataModel);

@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "antd": "^5.2.0"
+    "antd": "^5.2.0",
+    "react-dropdown": "^1.11.0"
   }
 }
