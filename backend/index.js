@@ -1,24 +1,23 @@
 const express = require('express');
 const bodyParser =require('body-parser');
-const routesHandler = require('./routes/handler.js');
+const routesHandler = require('./controllers/handler.js');
 const mongoose = require('mongoose');
+const connectDB = require('./config/DbConnect');
 require('dotenv/config');
 
 
+// Connect to MongoDB
+connectDB();
+
+//TODO: User / Admin Login?
 const app = express();
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
+
+// routes
 app.use('/', routesHandler);
 
 
-//DB connection
-mongoose.connect(process.env.DB_URI)
-.then(() => {
-    console.log('DB Connected');
-})
-.catch( (err) => {
-    console.log(err);
-});
 /*
 if (process.env.NODE_ENV === 'production') {
     // Serve any static files
@@ -30,9 +29,12 @@ if (process.env.NODE_ENV === 'production') {
 }
 */
 
+
+
 const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => {
-    console.log(`Server Running on ${PORT}.`);
+mongoose.connection.once('open', () => {
+    console.log('Connected to MongoDB');
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 });
 
 
