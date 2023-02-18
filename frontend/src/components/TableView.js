@@ -1,6 +1,7 @@
 import React from "react";
+import { Table } from 'antd';
 
-function CreatDataTable(){
+function TableView(){
     return(
         <section>
             <div class="container-fluid">
@@ -10,4 +11,4 @@ function CreatDataTable(){
     );
 }
 
-export default CreatDataTable;
+export default TableView;

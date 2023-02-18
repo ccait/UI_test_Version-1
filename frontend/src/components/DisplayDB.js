@@ -1,5 +1,6 @@
 import React, {useEffect, useState}from "react";
 import Dropdown from 'react-dropdown';
+import TableView from "./TableView";
 import '../components.css';
 
 
@@ -29,6 +30,7 @@ function DisplayDB(){
                 <h1 class="mt-5">Please Confirm Your Current Database:</h1>
                 {JSON.stringify(nameItems)}
                 <Dropdown options={nameItems} onChange={onClick} placeholder="Select an option" class="dropdown"/>
+                <TableView/>
             </div>
         </section>
     );
