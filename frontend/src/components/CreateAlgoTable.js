@@ -39,7 +39,7 @@ function CreateAlgoTable(){
           {...props}
           onChange={(e) => uploadFile(e)}
         >
-          <Button icon={<UploadOutlined />}>Upload Data</Button>
+          <Button icon={<UploadOutlined />}>Upload File</Button>
           <p id="show-text"></p>
         </Upload>
       );
@@ -118,7 +118,7 @@ const uploadFile = (info) => {
                 <form method="POST" >
                     <UploadButton/>
                 </form>
-                <button onClick={createAlgo}>Create Above Algo file for Selected Table</button>
+                <button onClick={createAlgo}>Create Above Algo file for the Selected Table</button>
             </div>
         </section>
     );

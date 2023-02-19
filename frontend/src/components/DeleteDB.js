@@ -1,5 +1,5 @@
 import React from "react";
-import { message, Popconfirm } from 'antd';
+import { Button, message, Popconfirm } from 'antd';
 const confirm = (e) => {
   console.log(e);
   message.success('Click on Yes');
@@ -12,18 +12,18 @@ const confirm = (e) => {
 };
 const cancel = (e) => {
   console.log(e);
-  message.error('Click on No');
+  message.error('Deletion Canceled');
 };
 const ConfirmDelete = () => (
   <Popconfirm
     title="Delete the task"
-    description="Are you sure to delete this task?"
+    description="Are you sure to DELETE the data?"
     onConfirm={confirm}
     onCancel={cancel}
     okText="Yes"
     cancelText="No"
   >
-    <a href="#">Delete</a>
+    <Button type="primary" danger>Delete</Button>
   </Popconfirm>
 );
 function DeleteDB(){

@@ -12,10 +12,10 @@ function DisplayDB() {
     }, []);
     let nameItems = [];
     const [tablenames, setItems] = useState([]);
-    const [done, setDone] = useState(false)
+    const [done, setDone] = useState(false);
 
     const [col, setCol] = useState([])
-    const [dat, setDat] = useState([])
+    const [data, setData] = useState([])
     const fetchItems = async () => {
         const names = await fetch('/tablesName'); //retrieving list of collection names
         const tablenames = await names.json();
@@ -58,10 +58,9 @@ function DisplayDB() {
                     });
                     notifications.push(json[i]);
                 };
-
-                setCol(columns)
-                setDat(notifications)
-                setDone(true)
+                setCol(columns);
+                setData(notifications);
+                setDone(true);
                 console.log('columns:', columns);
                 console.log('data:', notifications);
             });
@@ -77,15 +76,10 @@ function DisplayDB() {
 
                 <Dropdown options={nameItems} onChange={onClick} placeholder="Select a Table" class="dropdown" />
                 {done && <Table
-                    // dataSource={dat}
-                    dataSource={notifications}
+                    dataSource={data}
                     columns={col}
                     rowKey="id"
                     bordered />}
-
-
-                <i>{console.log('data:', dat)}</i>
-                <i>{console.log('columns:', col)}</i>
             </div>
         </section>
     );

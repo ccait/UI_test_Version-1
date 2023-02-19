@@ -1,7 +1,6 @@
 import React from "react";
 import { UploadOutlined } from '@ant-design/icons';
 import { Button, message, Upload } from 'antd';
-//const dataModel = require("../../../backend/controllers/handler.js").dataModel;
 
 let modelData = {};
 
@@ -17,7 +16,7 @@ const uploadFile = (info) => {
       reader.onload = (e) => {
         console.log('reading file');
         console.log(e.target.result);
-        //console.log(e.target.result.split(' '));
+        //parse the file:
         const data = e.target.result.split('\n');
         preview.innerHTML = e.target.result.split(' ');
         fetch('/get_model', {
@@ -57,7 +56,7 @@ const uploadFile = (info) => {
       {...props}
       onChange={(e) => uploadFile(e)}
     >
-      <Button icon={<UploadOutlined />}>Upload Data</Button>
+      <Button icon={<UploadOutlined />}>Upload File</Button>
       <p id="show-text"></p>
     </Upload>
   );
@@ -83,11 +82,11 @@ export function CreateTable(){
     return(
         <section>
             <div class="container-fluid">
-                <h1 class="mt-5">Upload Data:</h1>
+                <h1 class="mt-5">Upload Data in txt File:</h1>
                 <form method="POST" >
                     <UploadButton/>
                 </form>
-                <button onClick={createTB}>Upload Above Data</button>
+                <button onClick={createTB}>Save Above Data</button>
             </div>
         </section>
     );

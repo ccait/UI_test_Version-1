@@ -1,5 +1,5 @@
 import React from "react";
-import { InfoCircleOutlined, UserOutlined } from '@ant-design/icons';
+import { InfoCircleOutlined } from '@ant-design/icons';
 import { Input, Tooltip, Button} from 'antd';
 
 function CreateDB(){
@@ -9,10 +9,15 @@ function CreateDB(){
                 <h1 class="mt-5">Specify the Name and Fields of a Database:</h1>
 
                 <form method="POST"  action="/create_Schema">
-                <Input type="text" placeholder="Name" name="CollectionNameInput" class="form-control" />
+                <Input type="text" placeholder="Name" name="CollectionNameInput" class="form-control" 
+                suffix={
+                <Tooltip title="Example: user">
+                    <InfoCircleOutlined style={{color: 'rgba(0,0,0,.45)',}}/>
+                    </Tooltip>
+                } />
                 <Input type="text" placeholder="Schema" name="CollectionSchemaInput" class="form-control" 
                 suffix={
-                <Tooltip title="Example: Name Age ID Emergency_Contact">
+                <Tooltip title="Example: name age ID emergency_contact">
                     <InfoCircleOutlined style={{color: 'rgba(0,0,0,.45)',}}/>
                     </Tooltip>
                 } />

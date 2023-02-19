@@ -2,16 +2,20 @@ import { Button, message, Steps, theme } from 'antd';
 import { useState } from 'react';
 const steps = [
   {
-    title: 'First',
-    content: 'First, create your database and the Schemas for each Table(Create Database). Then, upload the Data(Upload Tables). ',
+    title: 'Create Database',
+    content: '<Create Database> Enter the name and the Schemas for each Table. \nFor example \n name: user \n Schema: id age address',
   },
   {
-    title: 'Second',
-    content: 'You could always confirm your current database(Display Database) or Delete your data (Delete Database)',
+    title: 'Upload Tables',
+    content: '<Upload Tables>: Upload your data for the table you previously specified in a .txt file \n For example:\n John a 5 \nRose b 6\nSam c 8',
+  },
+  {
+    title: 'Display Database',
+    content: '<Display Database>: You could always confirm your current database or <Delete Database> will delete ALL data that was saved in database.)',
   },
   {
     title: 'Last',
-    content: 'Config the algorithm file (Specify Algo), and then start the De-identification(Start)',
+    content: '<Specify Algo>: Upload your algo options in a txt file.\n  <Start> Before start the De-identification, make sure you have confirmed your algo file and database',
   },
 ];
 const Instructions= () => {
