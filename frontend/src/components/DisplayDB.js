@@ -47,20 +47,44 @@ function DisplayDB() {
                 return res.json();
             })
             .then((json) => {
-                fields = Object.keys(json[0]);
+                if (Object.keys(json[0]).length === 1){
+                    for (let i = 0; i <json.length; i++){
+                        fields.push(Object.keys(json[i])[0]);
+                    }
+                    
+                } else fields = Object.keys(json[0]);
+                
+
                 console.log('fields:', fields);
                 columns = [];  //clear previous selection
                 notifications = [];
-                for (let i = 0; i < fields.length; i++) {
-                    columns.push({
-                        title: fields[i],
-                        dataIndex: fields[i]
-                    });
-                    notifications.push(json[i]);
+                if (Object.keys(json[0]).length === 1) {
+                    let obj ={};
+                    for (let i = 0; i < fields.length; i++){
+                        columns.push({
+                            title: fields[i],
+                            dataIndex: fields[i]
+                        });
+                        obj[fields[i]] = Object.values(json[i]);
+                    };
+                    // {a:3, b:1, c:7}
+                    notifications.push(obj);
+                    setCol(columns);
+                    setData(notifications);
+                    setDone(true);
+                } else {
+                    for (let i = 0; i < fields.length; i++) {
+                        columns.push({
+                            title: fields[i],
+                            dataIndex: fields[i]
+                        });
+                        notifications.push(json[i]);
+                    };
+                    setCol(columns);
+                    setData(notifications);
+                    setDone(true);
                 };
-                setCol(columns);
-                setData(notifications);
-                setDone(true);
+                
                 console.log('columns:', columns);
                 console.log('data:', notifications);
             });
