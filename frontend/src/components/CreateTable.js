@@ -20,7 +20,7 @@ const uploadFile = (info) => {
         //console.log(e.target.result.split(' '));
         const data = e.target.result.split('\n');
         preview.innerHTML = e.target.result.split(' ');
-        fetch('/getModel', {
+        fetch('/get_model', {
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
@@ -40,8 +40,6 @@ const uploadFile = (info) => {
         })
       };
       reader.readAsText(info.file.originFileObj);
-      console.log(preview.innerHTML.split(' '));
-      return preview.innerHTML.split('2', 17);
     } else if (info.file.status === 'error') {
       message.error(`${info.file.name} file upload failed.`);
     }
@@ -69,7 +67,7 @@ export function CreateTable(){
   function createTB(){
     console.log('create tb');
     alert('creating');
-      fetch("/createTB",
+      fetch("/create_table",
       {
         headers: {
           'Accept': 'application/json',

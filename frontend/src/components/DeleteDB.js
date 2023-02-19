@@ -3,6 +3,12 @@ import { message, Popconfirm } from 'antd';
 const confirm = (e) => {
   console.log(e);
   message.success('Click on Yes');
+  fetch('/delete_all_collections',
+  {method:'DELETE'}).then((res) =>{
+    console.log('delete success', res);
+  }).catch((err)=>{
+    console.log('delete failed:',err);
+  });
 };
 const cancel = (e) => {
   console.log(e);

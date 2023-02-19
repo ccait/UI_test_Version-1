@@ -1,11 +1,26 @@
 .Dropdown-root{
-    color: #2766DB;
-    align-items: center;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  transition: all 200ms linear;
+  border-radius: 2px;
+  width: fit-content;
+  letter-spacing: 1px;
+  text-align: center;
+  border: none;
+  background-color:cornflowerblue;
+  cursor: pointer;
+  color: #102770;
+  box-shadow: 0 5px 5px 0 
 
 }
 .Dropdown-menu{
-    border-style: solid;
+    background-color:aliceblue;
 }
 .Dropdown-option{
-    border-style: dotted;
+    border:steelblue;
+    border-top: teal;
+    border-radius: 2px;
+    border-style: inset;
+    font: sans-serif
 }

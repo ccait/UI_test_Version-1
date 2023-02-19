@@ -1,36 +1,91 @@
-import React, {useEffect, useState}from "react";
+import React, { useEffect, useState } from "react";
 import Dropdown from 'react-dropdown';
-import TableView from "./TableView";
+import { Table } from 'antd';
 import '../components.css';
 
 
-function DisplayDB(){
+function DisplayDB() {
 
-    useEffect( ()=> {
+    // get all table names:
+    useEffect(() => {
         fetchItems();
     }, []);
-    let nameItems=[];
-    const [items, setItems] = useState([]);
-    const fetchItems = async() => {
+    let nameItems = [];
+    const [tablenames, setItems] = useState([]);
+    const [done, setDone] = useState(false)
+
+    const [col, setCol] = useState([])
+    const [dat, setDat] = useState([])
+    const fetchItems = async () => {
         const names = await fetch('/tablesName'); //retrieving list of collection names
-        const items = await names.json(); 
-        setItems(items);
+        const tablenames = await names.json();
+        setItems(tablenames);
     };
-    const onClick = (e) => console.log(e.key);
-    
-    for (let i = 0; i < items.length; i++){
+    for (let i = 0; i < tablenames.length; i++) {
         nameItems[i] = {
-            key:i,
-            value: items[i]
+            key: i,
+            value: tablenames[i]
         };
     };
-    return(
+
+
+    // dropdown menu selection onClick:
+    let columns = [];
+    let notifications = [];
+    function onClick(e) {
+        let fields = [];
+        console.log(JSON.stringify(e.value));
+        fetch('/get_fields',
+            {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: 'POST',
+                body: JSON.stringify(e)
+            }).then((res) => {
+                return res.json();
+            })
+            .then((json) => {
+                fields = Object.keys(json[0]);
+                console.log('fields:', fields);
+                columns = [];  //clear previous selection
+                notifications = [];
+                for (let i = 0; i < fields.length; i++) {
+                    columns.push({
+                        title: fields[i],
+                        dataIndex: fields[i]
+                    });
+                    notifications.push(json[i]);
+                };
+
+                setCol(columns)
+                setDat(notifications)
+                setDone(true)
+                console.log('columns:', columns);
+                console.log('data:', notifications);
+            });
+        console.log('columns:', columns);
+        console.log('data:', notifications);
+    };
+
+
+    return (
         <section>
             <div class="container-fluid">
                 <h1 class="mt-5">Please Confirm Your Current Database:</h1>
-                {JSON.stringify(nameItems)}
-                <Dropdown options={nameItems} onChange={onClick} placeholder="Select an option" class="dropdown"/>
-                <TableView/>
+
+                <Dropdown options={nameItems} onChange={onClick} placeholder="Select a Table" class="dropdown" />
+                {done && <Table
+                    // dataSource={dat}
+                    dataSource={notifications}
+                    columns={col}
+                    rowKey="id"
+                    bordered />}
+
+
+                <i>{console.log('data:', dat)}</i>
+                <i>{console.log('columns:', col)}</i>
             </div>
         </section>
     );

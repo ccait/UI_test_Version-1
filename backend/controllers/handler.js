@@ -51,23 +51,23 @@ router.get('/tablesName', async (req, res) => {
 
 // Create a collection with given name
 let dataModel;
-router.post('/createSchema', async(req, res) => {
+router.post('/create_Schema', async(req, res) => {
     const name = req.body.CollectionNameInput;
     const input = req.body.CollectionSchemaInput;
-    console.log(input);
-    console.log(name);
+    //console.log(input);
+    //console.log(name);
     const scc = input.split(' ');
     console.log(scc);
     var newSchema = {};
     for(var  i = 0; i < scc.length; i++) {
         newSchema[scc[i]] = {
             type: 'String',
-            index: true
+            //index: true
         }
     };
     const collectionName ={collection: name};
     console.log(newSchema);
-    const newModel = mongoose.model(name,new Schema(newSchema, collectionName));
+    const newModel = mongoose.model(name,new Schema(newSchema, collectionName, { versionKey: false }));
     collectionModel = newModel;
     dataModel = scc;
     newModel.createCollection().then(function(coll){
@@ -82,8 +82,8 @@ router.post('/createSchema', async(req, res) => {
 });
 
 // insert the data
-router.post('/createTB', async(req, res) => {
-    console.log(req.body);
+router.post('/create_table', async(req, res) => {
+    //console.log(req.body);
     let collectionData = [];
     let data = req.body.data;
     let fields = req.body.fields;
@@ -103,14 +103,73 @@ router.post('/createTB', async(req, res) => {
       collectionModel.insertMany(collectionData, function(err, docs) {
         if (err) {console.log('insert error', err);}
         console.log('insert input collection successful');
-        console.log(docs);
+        //console.log(docs);
       });
 
     res.end('create tb post success');
 });
-//
-router.post('/getModel', async(req,res) =>{
+// return the model from previous input
+router.post('/get_model', async(req,res) =>{
     console.log('get model', dataModel);
     res.json(dataModel);
 });
+
+
+
+// return documents in the given collection
+router.post('/get_fields', async(req,res) =>{
+    const collName = req.body.value;
+    console.log('get table:', collName);
+    const collection = mongoose.connection.db.collection(collName);
+    collection.find({},{ projection: { _id: 0, __v:0}}).limit(10).toArray((err, documents) =>{
+        console.log('return document:',documents);
+        res.json(documents);
+    });
+
+});
+
+//
+router.post('/create_algo', async(req, res) => {
+    console.log(req.body);
+    let data = req.body.data;
+    let fields = req.body.fields;
+    let name = req.body.name.value + '_algo';
+    let schema ={};
+    //construct Schema Model in mongoose
+    for (let i = 0; i < fields.length; i++){
+        schema[fields[i]] = {
+            type: 'String'} };
+    
+    const algoModel = mongoose.model(name, new Schema(schema, {collation: name, versionKey: false }));
+    //construct datas
+    let algoData = [];
+    for (let i = 0; i < data.length; i++){
+        let obj ={};
+        obj[fields[i]] = data[i];
+        algoData.push(obj);
+    }
+    console.log('algo data:', algoData);
+    console.log('algo schema', schema);
+    algoModel.insertMany(algoData, function(err, docs){
+        if (err) {console.log('algo insert err:', err)};
+        console.log('insert algo data success');
+    });
+    res.end('create algo table sucess');
+
+});
+
+//delete all collections:
+router.delete('/delete_all_collections', async(req, res) =>{
+    console.log('DELETE all table');
+    const db = mongoose.connection.db;
+    const collections = await db.listCollections().toArray();
+    //delete action:
+    collections
+    .map((collection) => collection.name)
+    .forEach( async(collectionName) => {
+        db.dropCollection(collectionName);
+    });
+    res.sendStatus(200);
+});
+
 module.exports = router;

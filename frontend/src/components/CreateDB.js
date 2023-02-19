@@ -8,7 +8,7 @@ function CreateDB(){
             <div class="container-fluid">
                 <h1 class="mt-5">Specify the Name and Fields of a Database:</h1>
 
-                <form method="POST"  action="/createSchema">
+                <form method="POST"  action="/create_Schema">
                 <Input type="text" placeholder="Name" name="CollectionNameInput" class="form-control" />
                 <Input type="text" placeholder="Schema" name="CollectionSchemaInput" class="form-control" 
                 suffix={
