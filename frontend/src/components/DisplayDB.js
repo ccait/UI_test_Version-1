@@ -47,17 +47,19 @@ function DisplayDB() {
                 return res.json();
             })
             .then((json) => {
+                // if algo file:
                 if (Object.keys(json[0]).length === 1){
                     for (let i = 0; i <json.length; i++){
                         fields.push(Object.keys(json[i])[0]);
                     }
-                    
+                    //if data table:
                 } else fields = Object.keys(json[0]);
                 
 
                 console.log('fields:', fields);
                 columns = [];  //clear previous selection
                 notifications = [];
+                //if algo file:
                 if (Object.keys(json[0]).length === 1) {
                     let obj ={};
                     for (let i = 0; i < fields.length; i++){
@@ -67,12 +69,11 @@ function DisplayDB() {
                         });
                         obj[fields[i]] = Object.values(json[i]);
                     };
-                    // {a:3, b:1, c:7}
                     notifications.push(obj);
                     setCol(columns);
                     setData(notifications);
                     setDone(true);
-                } else {
+                } else { // if data table:
                     for (let i = 0; i < fields.length; i++) {
                         columns.push({
                             title: fields[i],
@@ -84,9 +85,8 @@ function DisplayDB() {
                     setData(notifications);
                     setDone(true);
                 };
-                
-                console.log('columns:', columns);
-                console.log('data:', notifications);
+                //console.log('columns:', columns);
+                //console.log('data:', notifications);
             });
         console.log('columns:', columns);
         console.log('data:', notifications);
