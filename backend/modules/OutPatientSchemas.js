@@ -23,6 +23,7 @@ const outpatientRegisterSchema = new mongoose.Schema({
     register_id: {
         type: String,
         required: true
+        // TODO: Ref 1-1 appointment_id in outpatientVisit
     },
     appointment_id: {
         type: String
@@ -112,6 +113,8 @@ const outpatientVisitSchema = new mongoose.Schema({
     appointment_id: { 
         type: String,
         equired: true 
+        // TODO: Ref 1-1 appointment_id in outpatientVisit
+        //       Ref 1-N  prescription_id in outpatientMaster
     },
     appointment_time: { 
         type: Date
@@ -175,15 +178,82 @@ const outpatientVisitSchema = new mongoose.Schema({
 });
 
 // outpatient master - 处方主表：
-//refer？？？？
+const outpatientMasterSchema = new mongoose.Schema({
+    institution_code: {
+      type: String,
+    },
+    data_entry_time: {
+      type: Date
+      // TODO: Chinese date format handle
+    },
+    patient_id: {
+      type: String
+    },
+    prescription_id: {
+      type: String,
+      required: true
+      // TODO: Ref 1-N appointment_id in outpatientVisit??????
+    },
+    appointment_id: {
+      type: String
+    },
+    order_id: {
+      type: String
+    },
+    prescription_category_id: {
+      type: String
+    },
+    prescription_category: {
+      type: String
+    },
+    appointment_time: {
+      type: Date
+    },
+    prescription_office_code: {
+      type: String
+    },
+    prescription_office: {
+      type: String
+    },
+    prescription_doctor_id: {
+      type: String
+    },
+    prescription_doctor: {
+      type: String
+    },
+    prescription_cost: {
+      type: Number
+    },
+    notes: {
+      type: String
+    },
+    entry_creation_personnel: {
+      type: String
+    },
+    entry_creation_timestamp: {
+      type: Date
+      // TODO: Chinese date format handle
+    },
+    entry_modify_personnel: {
+      type: String
+    },
+    entry_modify_timestamp: {
+      type: Date
+      // TODO: Chinese date format handle
+    },
+    update_confirmation: {
+      type: String
+    }
+  });
 
-
-const OutpatientRegister = mongoose.model('outpatientRegister', outpatientRegisterSchema);
-const OutpatientVisit = mongoose.model('outpatientVisit', outpatientVisitSchema);
-
+// outpatient order medical - 药品处方明细表
+const OutpatientRegister = mongoose.model('outpatient_register', outpatientRegisterSchema);
+const OutpatientVisit = mongoose.model('outpatient_visit', outpatientVisitSchema);
+const OutpatientMaster = mongoose.model('outpatient_master', outpatientMasterSchema);
 const outpatientSchemas = {
-    'OutpatientRegister': OutpatientRegister,
-    'OutpatientVisit': OutpatientVisit
+    'outpatient_register': OutpatientRegister,
+    'outpatient_visit': OutpatientVisit,
+    'Ooutpatient_master': OutpatientMaster,
 
 
 }
