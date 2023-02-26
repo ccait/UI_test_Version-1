@@ -5,13 +5,13 @@ const Schema = mongoose.Schema;
 // Default Templates:
 // patient info - 病人信息表 公共业务
 const patientInfoSchema = new mongoose.Schema({
+  _id: false,
     institution_code: { 
       type: String 
     },
     documentation_time: { 
       type: Date
-      //min: '1987-09-28',
-      //max: '2002-12-09'
+      //TODO: min: '1987-09-28', max: '2002-12-09'
     },
     data_entry_time: { 
       type: Date
@@ -19,7 +19,8 @@ const patientInfoSchema = new mongoose.Schema({
     },
     patient_id: { 
       type: String,
-      required: true 
+      required: true,
+      unique: true
     },
     patient_name: { 
       type: String
